@@ -1,10 +1,18 @@
-name: Publish to PyPI
+name: publish
+
 on:
   push:
     tags:
       - "v*.*.*"
+
 jobs:
+  test:
+    uses: ./.github/workflows/reusable-test.yml
+    with:
+      ref: ${{ github.ref }}
+
   publish:
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
