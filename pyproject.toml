@@ -1,9 +1,9 @@
 [project]
 name = "default_logging"
-version = "0.2.0"
-description = "Standardized Python logging with millisecond precision, timezone support, YAML config, and OpenTelemetry context. Provides a default configuration but allows user replacement."
+version = "0.5.0"
+description = "A Python package that provides ready-to-use logging configuration with enhanced formatters, and automatic directory creation. Simplifies logging setup with sensible defaults while supporting custom configurations."
 authors = [
-    {name = "kimberly"}
+    {name = "kimberly", email = "45748394+kquiet@users.noreply.github.com"}
 ]
 license = {text = "MIT"}
 readme = "README.md"
@@ -11,6 +11,9 @@ requires-python = ">=3.9"
 dependencies = [
     "pyyaml (>=6.0.2,<7.0.0)"
 ]
+
+[project.urls]
+repository = "https://github.com/kquiet/python_default_logging"
 
 [tool.poetry]
 packages = [
