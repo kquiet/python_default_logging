@@ -1,4 +1,4 @@
-# default_logging
+# default_logging [![test](https://github.com/kquiet/python_default_logging/actions/workflows/test.yml/badge.svg)](https://github.com/kquiet/python_default_logging/actions/workflows/test.yml) [![publish](https://github.com/kquiet/python_default_logging/actions/workflows/publish.yml/badge.svg)](https://github.com/kquiet/python_default_logging/actions/workflows/publish.yml) [![PyPI version](https://img.shields.io/pypi/v/default_logging.svg?color=blue)](https://pypi.org/project/default_logging/)
 
 A Python package that provides ready-to-use logging configuration with enhanced formatters, and automatic directory creation. Simplifies logging setup with sensible defaults while supporting custom configurations.
 
