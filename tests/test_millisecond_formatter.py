@@ -4,7 +4,7 @@ from default_logging.millisecond_formatter import MillisecondFormatter, UtcTimez
 
 
 def test_millisecond_formatter_format_time_with_datefmt():
-    formatter = MillisecondFormatter(fmt="%(asctime)s", datefmt="%Y-%m-%d %H:%M:%S.%f %z")
+    formatter = MillisecondFormatter(fmt="%(asctime)s", datefmt="%Y-%m-%dT%H:%M:%S.%f%z")
     record = logging.LogRecord(
         name="test", level=logging.INFO, pathname=__file__, lineno=1,
         msg="msg", args=(), exc_info=None
@@ -27,12 +27,12 @@ def test_millisecond_formatter_format_time_default():
     assert isinstance(formatted_time, str)
 
 def test_utc_timezone_formatter_tz_and_converter():
-    formatter = UtcTimezoneFormatter(fmt="%(asctime)s", datefmt="%Y-%m-%d %H:%M:%S.%f %z")
+    formatter = UtcTimezoneFormatter(fmt="%(asctime)s", datefmt="%Y-%m-%dT%H:%M:%S.%f%z")
     assert formatter.tz_str == "Z"
     assert formatter.converter == time.gmtime
 
 def test_utc_timezone_formatter_format_time_utc():
-    formatter = UtcTimezoneFormatter(fmt="%(asctime)s", datefmt="%Y-%m-%d %H:%M:%S.%f %z")
+    formatter = UtcTimezoneFormatter(fmt="%(asctime)s", datefmt="%Y-%m-%dT%H:%M:%S.%f%z")
     record = logging.LogRecord(
         name="test", level=logging.INFO, pathname=__file__, lineno=1,
         msg="msg", args=(), exc_info=None

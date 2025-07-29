@@ -1,7 +1,7 @@
 [project]
 name = "default_logging"
-version = "0.1.0"
-description = "A python module for basic logging"
+version = "0.2.0"
+description = "Standardized Python logging with millisecond precision, timezone support, YAML config, and OpenTelemetry context. Provides a default configuration but allows user replacement."
 authors = [
     {name = "kimberly"}
 ]
@@ -25,10 +25,25 @@ requires-poetry = ">=2.0"
 [tool.poetry.group.test.dependencies]
 pytest = "~=8.0"
 pytest-cov = "~=6.2"
+opentelemetry-api = "~=1.35"
+opentelemetry-sdk = "~=1.35"
+opentelemetry-instrumentation = ">=0.56b0"
+opentelemetry-instrumentation-logging = ">=0.56b0"
 
 [tool.poetry.requires-plugins]
 poethepoet = { version = "~=0.35", extras = ["poetry_plugin"]}
 
+[tool.poe.tasks.test-otel]
+interpreter = ["bash", "powershell"]
+shell = """
+opentelemetry-instrument python app.py
+"""
+
+[tool.poe.tasks.test]
+interpreter = ["bash", "powershell"]
+shell = """
+pytest
+"""
 [tool.poe.tasks.test-coverage]
 interpreter = ["bash", "powershell"]
 shell = """

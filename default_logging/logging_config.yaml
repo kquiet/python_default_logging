@@ -12,11 +12,11 @@ formatters:
     datefmt: '%Y-%m-%dT%H:%M:%S.%f%z'
 
 handlers:
-  console_stdout:
+  console:
     class: logging.StreamHandler
     formatter: simple
     stream: ext://sys.stdout
-  rotating_file_handler:
+  rotating_file:
     class: logging.handlers.RotatingFileHandler
     formatter: simple
     filename: logs/app.log
@@ -24,8 +24,14 @@ handlers:
     backupCount: 3
     encoding: utf-8
 
+loggers:
+  uvicorn:
+    level: INFO
+    handlers: [console, rotating_file]
+    propagate: False
+
 root:
   level: DEBUG
   handlers:
-  - console_stdout
-  - rotating_file_handler
+  - console
+  - rotating_file

@@ -1,19 +1,24 @@
 import logging
 import time
+from typing import Optional
 
 class MillisecondFormatter(logging.Formatter):
     """
-    A logging formatter that adds milliseconds to the log time.
-    """
-    def __init__(self, fmt=None, datefmt=None, style='%'):
-        super().__init__(fmt=fmt, datefmt=datefmt, style=style)
-        temp = time.strftime('%z')
-        if temp and len(temp) == 5 and (temp[0] == '+' or temp[0] == '-'):
-            self.tz_str = f"{temp[0]}{temp[1:3]}:{temp[3:5]}"
-        else:
-            self.tz_str = temp
+    Formatter for Python logging that adds millisecond precision to log timestamps
+    and formats the timezone offset as "+HH:MM" or "-HH:MM".
 
-    def formatTime(self, record, datefmt=None):
+    By default, uses the local timezone and supports custom date/time formats
+    with millisecond and timezone placeholders ("%f" for milliseconds, "%z" for offset).
+    """
+    def __init__(self, fmt: Optional[str] = None, datefmt: Optional[str] = None, style: str = '%') -> None:
+        super().__init__(fmt=fmt, datefmt=datefmt, style=style)
+        org_tz = time.strftime('%z')
+        if org_tz and len(org_tz) == 5 and (org_tz[0] == '+' or org_tz[0] == '-'):
+            self.tz_str = f"{org_tz[0]}{org_tz[1:3]}:{org_tz[3:5]}"
+        else:
+            self.tz_str = org_tz
+
+    def formatTime(self, record: logging.LogRecord, datefmt: Optional[str] = None) -> str:
         ct = self.converter(record.created)
         if datefmt:
             datefmt = datefmt.replace("%f", "%03d" % int(record.msecs))
@@ -27,9 +32,12 @@ class MillisecondFormatter(logging.Formatter):
 
 class UtcTimezoneFormatter(MillisecondFormatter):
     """
-    A logging formatter that formats log times in UTC (GMT) with 'Z' offset.
+    Formatter for Python logging that outputs log timestamps in UTC (GMT) with millisecond
+    precision and a 'Z' suffix to indicate zero offset.
+
+    Inherits from MillisecondFormatter and overrides the timezone to always be UTC.
     """
-    def __init__(self, fmt=None, datefmt=None, style='%'):
+    def __init__(self, fmt: Optional[str] = None, datefmt: Optional[str] = None, style: str = '%') -> None:
         super().__init__(fmt=fmt, datefmt=datefmt, style=style)
         self.tz_str = 'Z'
 
